@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Web, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
@@ -105,6 +109,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BarcodePrint.aspx" />
     <Content Include="Category\Setup.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -125,6 +130,8 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Item\Setup.aspx" />
+    <Content Include="Item\StockIn.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -162,6 +169,19 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Barcode.cs">
+      <DependentUpon>Barcode.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="BarcodePrint.aspx.cs">
+      <DependentUpon>BarcodePrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BarcodePrint.aspx.designer.cs">
+      <DependentUpon>BarcodePrint.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Category\Setup.aspx.cs">
       <DependentUpon>Setup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -178,6 +198,20 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Item\Setup.aspx.cs">
+      <DependentUpon>Setup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Item\Setup.aspx.designer.cs">
+      <DependentUpon>Setup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Item\StockIn.aspx.cs">
+      <DependentUpon>StockIn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Item\StockIn.aspx.designer.cs">
+      <DependentUpon>StockIn.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
@@ -225,6 +259,15 @@
       <Project>{04C05CDB-AC16-4AB9-A33A-0FF3259BCF1B}</Project>
       <Name>Shop.Persistancis</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Barcode.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Barcode.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
