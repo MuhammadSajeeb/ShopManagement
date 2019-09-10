@@ -18,52 +18,53 @@ namespace ShopManagement
         ReportDocument crystal = new ReportDocument();
 
         StocksInRepository _StocksInRepository = new StocksInRepository();
-        string code;
-        int Qty;
+         
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
             {
-                if (Convert.ToInt32(Request.QueryString["code"]) != 0)
+                if (Convert.ToInt32(Request.QueryString["id"]) != 0)
                 {
-                    GetQtyByCode();
+                    //GetQtyByCode();
+                    string id = (Request.QueryString["id"]);
+                    int qty = Convert.ToInt32(Request.QueryString["qty"]);
 
                     crystal.Load(@"F:\Web Form Project\ShopManagement\ShopMS\ShopManagement\Barcode.rpt");
 
                     SqlConnection con = new SqlConnection(@"Data Source=localhost;Initial Catalog=ShopMsDb;Integrated Security=True");
 
-                    string sql = "Select *from StockIn where ItemCode='" + code + "'";
+                    string sql = "Select *from StockIn where Id='" + id + "'";
 
-                    for (int i = 1; i < Qty; i++)
+                    for (int i = 1; i < qty; i++)
                     {
-                        sql = sql + "Union All Select *from StockIn  where ItemCode='" + code + "'";
+                        sql = sql + "Union All Select *from StockIn  where Id='" + id + "'";
                     }
 
                     SqlDataAdapter sda = new SqlDataAdapter(sql, con);
-                    DataTable dt = new DataTable();
-                    sda.Fill(dt);
-                    crystal.SetDataSource(dt);
+                    DataSet ds = new DataSet();
+                    sda.Fill(ds,"StockIn");
+                    crystal.SetDataSource(ds);
                     CrystalReportViewer1.ReportSource = crystal;
                 }
                 
             }
             
         }
-        public void GetQtyByCode()
-        {
-            code = (Request.QueryString["code"]);
+        //public void GetQtyByCode()
+        //{
+        //    code = (Request.QueryString["code"]);
 
-            var Data = _StocksInRepository.GetQtyByCode(code);
-            if (Data != null)
-            {
-                Qty = Data.Quantity;
+        //    var Data = _StocksInRepository.GetQtyByCode(code);
+        //    if (Data != null)
+        //    {
+        //        Qty = Data.Quantity;
  
 
-            }
-            else
-            {
-            }
+        //    }
+        //    else
+        //    {
+        //    }
 
-        }
+        //}
     }
 }

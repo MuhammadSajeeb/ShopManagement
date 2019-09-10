@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ShopManagement.Report {
+namespace ShopManagement {
     using System;
     using System.ComponentModel;
     using CrystalDecisions.Shared;
@@ -41,7 +41,7 @@ namespace ShopManagement.Report {
         
         public override string FullResourceName {
             get {
-                return "ShopManagement.Report.Barcode.rpt";
+                return "ShopManagement.Barcode.rpt";
             }
             set {
                 // Do nothing

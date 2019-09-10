@@ -92,7 +92,7 @@ namespace Shop.Persistancis.Repositories
         {
             StocksIn _StocksIn = null;
 
-            string query = ("Select *From StockIn where ItemCode='" + code + "' ");
+            string query = ("Select top 1 *from StockIn Where ItemCode='"+code+"' And Date='"+DateTime.Now.ToShortDateString()+"' order by Quantity desc");
             var reader = _MainRepository.Reader(query, _MainRepository.ConnectionString());
             if (reader.HasRows)
             {
@@ -120,6 +120,8 @@ namespace Shop.Persistancis.Repositories
                 while (reader.Read())
                 {
                     var _StocksIn = new StocksIn();
+
+                    _StocksIn.Id=Convert.ToInt32(reader["Id"].ToString());
                     _StocksIn.ItemCode = (reader["ItemCode"].ToString());
                     _StocksIn.Quantity = Convert.ToInt32(reader["Quantity"].ToString());
                     _StocksIn.UnitCost = Convert.ToDecimal(reader["UnitCost"].ToString());

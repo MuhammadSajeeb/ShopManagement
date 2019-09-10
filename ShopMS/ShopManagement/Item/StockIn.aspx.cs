@@ -20,7 +20,8 @@ namespace ShopManagement.Item
                 GetAllCategories();
                 SizeDropDownList.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Available No Size", "0"));
                 ItemsDropDownList.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Available No Items", "0"));
-                
+                StockGridView.Columns[1].Visible = false;
+
             }
         }
         protected void ShowMessage(string Message, MessageType type)
@@ -119,26 +120,32 @@ namespace ShopManagement.Item
         {
             try
             {
-                StocksIn _StocksIn = new StocksIn();
-                _StocksIn.Quantity = Convert.ToInt32(txtQty.Text);
-                _StocksIn.Size = SizeDropDownList.SelectedItem.ToString();
-                _StocksIn.UnitCost = Convert.ToDecimal(txtCost.Text);
-                _StocksIn.Mrp = Convert.ToDecimal(txtMrp.Text);
-                _StocksIn.ItemName = ItemsDropDownList.SelectedItem.ToString();
-                _StocksIn.ItemCode = (txtCode.Text);
-                _StocksIn.CategoriesId = Convert.ToInt32(CategoriesDropDownList.SelectedValue);
+                if(CategoriesDropDownList.SelectedIndex>0)
+                {
+                    StocksIn _StocksIn = new StocksIn();
+                    _StocksIn.Quantity = Convert.ToInt32(txtQty.Text);
+                    _StocksIn.Size = SizeDropDownList.SelectedItem.ToString();
+                    _StocksIn.UnitCost = Convert.ToDecimal(txtCost.Text);
+                    _StocksIn.Mrp = Convert.ToDecimal(txtMrp.Text);
+                    _StocksIn.ItemName = ItemsDropDownList.SelectedItem.ToString();
+                    _StocksIn.ItemCode = (txtCode.Text);
+                    _StocksIn.CategoriesId = Convert.ToInt32(CategoriesDropDownList.SelectedValue);
 
-                int SaveSuccess = _StocksInRepository.Add(_StocksIn);
-                if(SaveSuccess>0)
-                {
-                    ShowMessage("Successfully Add Stock....", MessageType.Success);
-                    GetAllCategories();
-                    Refresh();
+                    int SaveSuccess = _StocksInRepository.Add(_StocksIn);
+                    if (SaveSuccess > 0)
+                    {
+                        ShowMessage("Successfully Add Stock....", MessageType.Success);
+                        LoadStocks();
+                        GetAllCategories();
+                        Refresh();
+                        //Response.Redirect(Request.Url.AbsoluteUri);
+                    }
+                    else
+                    {
+                        ShowMessage("Failed Stock Input....", MessageType.Success);
+                    }
                 }
-                else
-                {
-                    ShowMessage("Failed Stock Input....", MessageType.Success);
-                }
+
 
             }
             catch(Exception ex)
@@ -154,8 +161,13 @@ namespace ShopManagement.Item
 
         protected void StockGridView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string code = (StockGridView.SelectedRow.Cells[1].Text);
-            Response.Redirect("~/BarcodePrint.aspx?code=" + code);
+            StockGridView.Columns[1].Visible = true;
+
+            string id = (StockGridView.SelectedRow.Cells[1].Text);
+            string qty= (StockGridView.SelectedRow.Cells[3].Text);
+
+            Response.Redirect("~/BarcodePrint.aspx?id=" + id+"&qty="+qty);
+             
         }
     }
 }

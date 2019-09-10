@@ -93,6 +93,7 @@
                                     <asp:LinkButton ID="lnDelete" CommandArgument='<%# Eval("ItemCode") %>' CommandName="DeleteRow" ForeColor="#8C4510" runat="server" CausesValidation="false">Delete</asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
+                            <asp:BoundField DataField="Id" HeaderText="Id"/>
                             <asp:BoundField DataField="ItemCode" HeaderText="Code" />
                             <asp:BoundField DataField="Quantity" HeaderText="Quantity" />
                             <asp:BoundField DataField="UnitCost" HeaderText="Unit Cost" />
