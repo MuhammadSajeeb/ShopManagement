@@ -13,15 +13,14 @@ using Shop.Persistancis.Repositories;
 
 namespace ShopManagement
 {
-    public partial class BarcodePrint : System.Web.UI.Page
+    public partial class BarcodesPrint : System.Web.UI.Page
     {
         ReportDocument crystal = new ReportDocument();
 
         StocksInRepository _StocksInRepository = new StocksInRepository();
-         
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if (!IsPostBack)
             {
                 if (Convert.ToInt32(Request.QueryString["id"]) != 0)
                 {
@@ -42,29 +41,12 @@ namespace ShopManagement
 
                     SqlDataAdapter sda = new SqlDataAdapter(sql, con);
                     DataSet ds = new DataSet();
-                    sda.Fill(ds,"StockIn");
+                    sda.Fill(ds, "StockIn");
                     crystal.SetDataSource(ds);
                     CrystalReportViewer1.ReportSource = crystal;
                 }
-                
+
             }
-            
         }
-        //public void GetQtyByCode()
-        //{
-        //    code = (Request.QueryString["code"]);
-
-        //    var Data = _StocksInRepository.GetQtyByCode(code);
-        //    if (Data != null)
-        //    {
-        //        Qty = Data.Quantity;
- 
-
-        //    }
-        //    else
-        //    {
-        //    }
-
-        //}
     }
 }

@@ -109,7 +109,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BarcodePrint.aspx" />
+    <Content Include="BarcodesPrint.aspx" />
     <Content Include="Category\Setup.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -175,12 +175,12 @@
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="BarcodePrint.aspx.cs">
-      <DependentUpon>BarcodePrint.aspx</DependentUpon>
+    <Compile Include="BarcodesPrint.aspx.cs">
+      <DependentUpon>BarcodesPrint.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="BarcodePrint.aspx.designer.cs">
-      <DependentUpon>BarcodePrint.aspx</DependentUpon>
+    <Compile Include="BarcodesPrint.aspx.designer.cs">
+      <DependentUpon>BarcodesPrint.aspx</DependentUpon>
     </Compile>
     <Compile Include="Category\Setup.aspx.cs">
       <DependentUpon>Setup.aspx</DependentUpon>

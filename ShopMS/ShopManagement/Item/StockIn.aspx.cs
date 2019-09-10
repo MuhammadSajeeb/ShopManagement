@@ -20,7 +20,7 @@ namespace ShopManagement.Item
                 GetAllCategories();
                 SizeDropDownList.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Available No Size", "0"));
                 ItemsDropDownList.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Available No Items", "0"));
-                StockGridView.Columns[1].Visible = false;
+                StockGridView.Columns[1].Visible = true;
 
             }
         }
@@ -166,7 +166,7 @@ namespace ShopManagement.Item
             string id = (StockGridView.SelectedRow.Cells[1].Text);
             string qty= (StockGridView.SelectedRow.Cells[3].Text);
 
-            Response.Redirect("~/BarcodePrint.aspx?id=" + id+"&qty="+qty);
+            Response.Redirect("~/BarcodesPrint.aspx?id=" + id+"&qty="+qty);
              
         }
     }
