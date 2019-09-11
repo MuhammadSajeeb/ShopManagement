@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Models\Categories.cs" />
     <Compile Include="Models\Items.cs" />
+    <Compile Include="Models\SaleDetails.cs" />
     <Compile Include="Models\Sizes.cs" />
     <Compile Include="Models\StocksIn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
