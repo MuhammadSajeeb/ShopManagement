@@ -7,8 +7,9 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <asp:Label runat="server" ID="lblItemCode" AssociatedControlID="txtItemcode" CssClass="col-md-2 control-label">Item Code</asp:Label>
-                <asp:TextBox runat="server" ID="txtItemcode" CssClass="form-control" TextMode="Number" OnTextChanged="txtItemcode_TextChanged" />
+                <asp:TextBox runat="server" ID="txtItemcode" CssClass="form-control" TextMode="Number" AutoPostBack="true" OnTextChanged="txtItemcode_TextChanged" />
                 <asp:Label runat="server" ID="lblShowQty" AssociatedControlID="lblShowQty" CssClass="col-md-2 control-label" Style="color:red">00</asp:Label>
+                <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
             </div>
         </div>
         <hr />
