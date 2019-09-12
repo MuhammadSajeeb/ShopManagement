@@ -14,7 +14,7 @@ namespace ShopManagement.Item
     {
         ItemSalesRepository _ItemSalesRepository = new ItemSalesRepository();
         string Item;
-        decimal Qty=1,Unit;
+        decimal Qty=1,Unit,total=0;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -95,6 +95,7 @@ namespace ShopManagement.Item
                     }
                     ViewState["Details"] = dataTable;
                     txtItemcode.Text = "";
+                    txtItemcode.Focus();
                 }
                 else
                 {}
@@ -103,41 +104,6 @@ namespace ShopManagement.Item
             catch
             {
             }
-        }
-        private void BindGridView()
-        {
-            //Declare a datatable for the gridview
-            DataTable dt = new DataTable();
-
-            //Add Columns to the datatable
-            dt.Columns.Add("Item", typeof(string));
-            dt.Columns.Add("Qty", typeof(decimal));
-            dt.Columns.Add("Unit", typeof(decimal));
-            dt.Columns.Add("Total", typeof(decimal));
-
-
-
-            //Define a datarow for the datatable dt
-            DataRow dr = dt.NewRow();
-
-
-            //Now add the datarow to the datatable
-            dt.Rows.Add(dr);
-
-            //Now bind the datatable to gridview
-            ItemSalesGridView.DataSource = dt;
-            ItemSalesGridView.DataBind();
-
-            //Now hide the extra row of the grid view
-            ItemSalesGridView.Rows[0].Visible = false;
-
-            //Delete row 0 from the datatable
-            dt.Rows[0].Delete();
-            dt.AcceptChanges();
-
-            //View the datatable to the viewstate
-            ViewState["Details"] = dt;
-
         }
         protected void ItemSalesGridView_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
@@ -165,6 +131,8 @@ namespace ShopManagement.Item
             //Now bind the datatable to the gridview
             ItemSalesGridView.DataSource = (DataTable)ViewState["Details"];
             ItemSalesGridView.DataBind();
+
+            lblShowQty.Text = total.ToString();
         }
 
         protected void ItemSalesGridView_RowEditing(object sender, GridViewEditEventArgs e)
@@ -202,19 +170,26 @@ namespace ShopManagement.Item
                 ItemSalesGridView.DataSource = dataTable;
                 ItemSalesGridView.DataBind();
 
+                lblShowQty.Text = total.ToString();
+
             }
         }
-
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void ItemSalesGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            ViewState["Details"] = null;
-            ItemSalesGridView.DataSource = null;
-            ItemSalesGridView.DataBind();
+            if(e.Row.RowType==DataControlRowType.DataRow)
+            {
+                var lbltotal = e.Row.FindControl("lblTotal") as Label;
+                if(lbltotal!=null)
+                {
+                    total += Convert.ToDecimal(lbltotal.Text);
+                }
+            }
         }
 
         protected void txtItemcode_TextChanged(object sender, EventArgs e)
         {
             SaleOrder();
+            lblShowQty.Text = total.ToString();
         }
     }
 }
