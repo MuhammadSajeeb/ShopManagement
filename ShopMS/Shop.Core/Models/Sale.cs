@@ -6,15 +6,10 @@ using System.Threading.Tasks;
 
 namespace Shop.Core.Models
 {
-    public class SaleDetails
+    public class Sale
     {
         public int Id { get; set; }
         public string Invoice { get; set; }
-        public string Item { get; set; }
-        public decimal Qty { get; set; }
-        public decimal Unit { get; set; }
-        public decimal Total { get; set; }
-        public string Status { get; set; }
-
+         
     }
 }

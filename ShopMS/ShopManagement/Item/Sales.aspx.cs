@@ -19,11 +19,30 @@ namespace ShopManagement.Item
         {
             if (!IsPostBack)
             {
-                     
+                txtDiscount.Text = "0";
+                AutoGenerateInvoice();
             }
         
         }
-
+        public void AutoGenerateInvoice()
+        {
+            decimal AlreadyExistData = _ItemSalesRepository.AlreadyExistData();
+            int Invoice = 1;
+            if (AlreadyExistData >= 1)
+            {
+                var GetLastInvoice = _ItemSalesRepository.GetLastInvoice();
+                if (GetLastInvoice != null)
+                {
+                    Invoice = Convert.ToInt32(GetLastInvoice.Invoice);
+                    Invoice++;
+                }
+                txtInvoice.Text = Invoice.ToString();
+            }
+            else
+            {
+                txtInvoice.Text = "1";
+            }
+        }
         public void SaleOrder()
         {
             try
@@ -105,6 +124,17 @@ namespace ShopManagement.Item
             {
             }
         }
+        protected void ItemSalesGridView_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                var lbltotal = e.Row.FindControl("lblTotal") as Label;
+                if (lbltotal != null)
+                {
+                    total += Convert.ToDecimal(lbltotal.Text);
+                }
+            }
+        }
         protected void ItemSalesGridView_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             //Findout the controls inside the gridview
@@ -132,7 +162,8 @@ namespace ShopManagement.Item
             ItemSalesGridView.DataSource = (DataTable)ViewState["Details"];
             ItemSalesGridView.DataBind();
 
-            lblShowQty.Text = total.ToString();
+            txtGrandTotal.Text = total.ToString();
+            txtPayableAmount.Text = total.ToString();
         }
 
         protected void ItemSalesGridView_RowEditing(object sender, GridViewEditEventArgs e)
@@ -170,26 +201,54 @@ namespace ShopManagement.Item
                 ItemSalesGridView.DataSource = dataTable;
                 ItemSalesGridView.DataBind();
 
-                lblShowQty.Text = total.ToString();
+                txtGrandTotal.Text = total.ToString();
+                txtPayableAmount.Text = total.ToString();
 
             }
         }
-        protected void ItemSalesGridView_RowDataBound(object sender, GridViewRowEventArgs e)
+
+        protected void txtDiscount_TextChanged(object sender, EventArgs e)
         {
-            if(e.Row.RowType==DataControlRowType.DataRow)
+            try
             {
-                var lbltotal = e.Row.FindControl("lblTotal") as Label;
-                if(lbltotal!=null)
-                {
-                    total += Convert.ToDecimal(lbltotal.Text);
-                }
+                decimal grandtotal = Convert.ToDecimal(txtGrandTotal.Text);
+                decimal discount = Convert.ToDecimal(txtDiscount.Text);
+
+                decimal cal = discount / 100;
+                decimal discountAmount = cal * grandtotal;
+                decimal payableamount = grandtotal - discountAmount;
+
+                txtPayableAmount.Text =(payableamount).ToString("00.00");
+                txtPaidAmount.Focus();
+            }
+            catch
+            {
+
+            }
+        }
+
+        protected void txtPaidAmount_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                decimal PayableAount = Convert.ToDecimal(txtPayableAmount.Text);
+                decimal PaidAmount = Convert.ToDecimal(txtPaidAmount.Text);
+
+                decimal changes = PaidAmount - PayableAount;
+                txtChanges.Text = (changes).ToString("00.00");
+            }
+            catch
+            {
+
             }
         }
 
         protected void txtItemcode_TextChanged(object sender, EventArgs e)
         {
             SaleOrder();
-            lblShowQty.Text = total.ToString();
+
+            txtGrandTotal.Text = total.ToString();
+            txtPayableAmount.Text = total.ToString();
         }
     }
 }

@@ -53,5 +53,33 @@
                 </asp:GridView>
             </div>
         </div>
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-2">
+                <asp:Label runat="server" ID="lblInvoice" AssociatedControlID="txtInvoice" CssClass="control-label">Invoice</asp:Label>
+                <asp:TextBox runat="server" ID="txtInvoice" CssClass="form-control" style="text-align:center" Font-Bold="true" Font-Size="Medium" TextMode="Number" ReadOnly="true" />
+            </div>
+            <div class="col-md-2">
+                <asp:Label runat="server" ID="lblGrandTotal" AssociatedControlID="txtGrandTotal" CssClass="control-label">Grand Total</asp:Label>
+                <asp:TextBox runat="server" ID="txtGrandTotal" CssClass="form-control" style="text-align:center" Font-Bold="true" Font-Size="Medium" ReadOnly="true" />
+            </div>
+            <div class="col-md-2">
+                <asp:Label runat="server" ID="lblDiscount" AssociatedControlID="txtPayableAmount" CssClass="control-label">Discount(%)</asp:Label>
+                <asp:TextBox runat="server" ID="txtDiscount" CssClass="form-control" Font-Bold="true" style="text-align:center" Font-Size="Medium" TextMode="Number" AutoPostBack="true" OnTextChanged="txtDiscount_TextChanged" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-2">
+                <asp:Label runat="server" ID="lblPayableAmount" AssociatedControlID="txtInvoice" CssClass="control-label">Payable Amount</asp:Label>
+                <asp:TextBox runat="server" ID="txtPayableAmount" CssClass="form-control" ReadOnly="true" style="text-align:center" Font-Bold="true" Font-Size="Medium"/>
+            </div>
+            <div class="col-md-2">
+                <asp:Label runat="server" ID="lblPaidAmount" AssociatedControlID="txtGrandTotal" CssClass="control-label">Paid Amount</asp:Label>
+                <asp:TextBox runat="server" ID="txtPaidAmount" CssClass="form-control" TextMode="Number" style="text-align:center" Font-Bold="true" Font-Size="Medium" AutoPostBack="true" OnTextChanged="txtPaidAmount_TextChanged" />
+            </div>
+            <div class="col-md-2">
+                <asp:Label runat="server" ID="lblChanges" AssociatedControlID="txtPayableAmount" CssClass="control-label">Changes Amount</asp:Label>
+                <asp:TextBox runat="server" ID="txtChanges" CssClass="form-control" ReadOnly="true" style="text-align:center" Font-Bold="true" Font-Size="Medium" />
+            </div>
+        </div>
     </div>
 </asp:Content>

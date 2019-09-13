@@ -10,7 +10,27 @@ namespace Shop.Persistancis.Repositories
     public class ItemSalesRepository
     {
         MainRepository _MainRepository = new MainRepository();
+        public decimal AlreadyExistData()
+        {
+            string query = "Select Count(*)from Sales";
+            return _MainRepository.ExecuteScalar(query, _MainRepository.ConnectionString());
+        }
+        public Sale GetLastInvoice()
+        {
+            Sale _Sale = null;
 
+            string query = "Select top 1 Invoice from Sales order by Invoice desc";
+            var reader = _MainRepository.Reader(query, _MainRepository.ConnectionString());
+            if (reader.HasRows)
+            {
+                reader.Read();
+                _Sale = new Sale();
+                _Sale.Invoice = (reader["Invoice"].ToString());
+            }
+            reader.Close();
+
+            return _Sale;
+        }
         public StocksIn GetDataByCode(string code)
         {
             StocksIn _StocksIn = null;
